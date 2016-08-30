@@ -35,9 +35,6 @@ endif
 ifeq ($(TARGET_USES_ION),true)
 libmm-venc-def += -DUSE_ION
 endif
-
-venc-inc       := $(TARGET_OUT_INTERMEDIATES)/KERNEL_OBJ/usr/include
-
 libmm-venc-def += -D_ANDROID_ICS_
 # ---------------------------------------------------------------------------------
 # 			Make the Shared library (libOmxVenc)
@@ -56,7 +53,6 @@ libmm-venc-inc      += frameworks/native/include/media/hardware
 libmm-venc-inc      += frameworks/native/include/media/openmax
 libmm-venc-inc      += hardware/qcom/media/msm8974/libc2dcolorconvert
 libmm-venc-inc      += frameworks/av/include/media/stagefright
-libmm-venc-inc      += $(venc-inc)
 
 LOCAL_MODULE                    := libOmxVenc
 LOCAL_MODULE_TAGS               := optional
@@ -74,9 +70,8 @@ else
 LOCAL_SRC_FILES   += venc/src/video_encoder_device.cpp
 endif
 
-LOCAL_SRC_FILES   += common/src/extra_data_handler.cpp
 
-LOCAL_ADDITIONAL_DEPENDENCIES  := $(TARGET_OUT_INTERMEDIATES)/KERNEL_OBJ/usr
+LOCAL_SRC_FILES   += common/src/extra_data_handler.cpp
 
 include $(BUILD_SHARED_LIBRARY)
 
@@ -91,7 +86,6 @@ mm-venc-test720p-inc            += $(LOCAL_PATH)/venc/inc
 mm-venc-test720p-inc            += $(OMX_VIDEO_PATH)/vidc/common/inc
 mm-venc-test720p-inc            += hardware/qcom/media/msm8974/mm-core/inc
 mm-venc-test720p-inc            += $(TARGET_OUT_HEADERS)/qcom/display
-mm-venc-test720p-inc            += $(venc-inc)
 
 LOCAL_MODULE                    := mm-venc-omx-test720p
 LOCAL_MODULE_TAGS               := optional
@@ -104,8 +98,6 @@ LOCAL_SRC_FILES                 += venc/test/camera_test.cpp
 LOCAL_SRC_FILES                 += venc/test/venc_util.c
 LOCAL_SRC_FILES                 += venc/test/fb_test.c
 
-LOCAL_ADDITIONAL_DEPENDENCIES  := $(TARGET_OUT_INTERMEDIATES)/KERNEL_OBJ/usr
-
 include $(BUILD_EXECUTABLE)
 
 # -----------------------------------------------------------------------------
@@ -115,7 +107,6 @@ include $(BUILD_EXECUTABLE)
 include $(CLEAR_VARS)
 
 venc-test-inc                   += $(LOCAL_PATH)/venc/inc
-venc-test-inc                   += $(venc-inc)
 
 LOCAL_MODULE                    := mm-video-encdrv-test
 LOCAL_MODULE_TAGS               := optional
@@ -125,8 +116,6 @@ LOCAL_C_INCLUDES                += hardware/qcom/media/msm8974/mm-core/inc
 
 LOCAL_SRC_FILES                 := venc/test/video_encoder_test.c
 LOCAL_SRC_FILES                 += venc/test/queue.c
-
-LOCAL_ADDITIONAL_DEPENDENCIES  := $(TARGET_OUT_INTERMEDIATES)/KERNEL_OBJ/usr
 
 include $(BUILD_EXECUTABLE)
 
